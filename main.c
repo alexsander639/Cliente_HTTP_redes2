@@ -1,27 +1,26 @@
 /*	Redes II - Cliente HTTP
-    Aluno: Alex Sander S. Araujo Junior		RGA: 2019.0743.005-9
-    Aluno: Vinícius Silva		        	RGA: 
+	Aluno: Alex Sander S. Araujo Junior		RGA: 2019.0743.005-9
+	Aluno: Vinícius Silva		        	RGA:
 */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/socket.h>
 
-
 int criar_socket();
 
 int main(int argc, char const *argv[])
 {
-    char url[100];
+	char url[100];
 	int socket_desc = criar_socket();
 
 	printf("O socket é: %d\n", socket_desc);
 
 	printf("Informe a URL completa: ");
 	scanf("%s", url);
-    printf("A url é: %s\n", url);
+	printf("A url é: %s\n", url);
 
-    return 0;
+	return 0;
 }
 
 int criar_socket()
@@ -35,9 +34,10 @@ int criar_socket()
 														Terceiro argumento define qual protocolo será usado
 														para comunicação, porém definido o primeiro e segundo
 														argumento, pode deixar o valor em 0*/
-    if (socket_novo == -1) {
-        perror("Não foi possível criar o socket");
-        exit(0);
-    }
+	if (socket_novo == -1)
+	{
+		printf("Não foi possível criar o socket");
+		exit(0);
+	}
 	return socket_novo;
 }
