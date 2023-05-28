@@ -1,6 +1,6 @@
 /*	Redes II - Cliente HTTP
-	Aluno: Alex Sander S. Araujo Junior		RGA: 2019.0743.005-9
-	Aluno: Vinícius Silva		        	RGA:
+	Aluno: Alex Sander S. Araujo Junior	RGA: 2019.0743.005-9
+	Aluno: Vinícius Silva de Paula		RGA:
 */
 
 #include <stdio.h>
@@ -38,7 +38,7 @@ int main(int argc, char const *argv[])
 	}
 
 	endereco_site = strtok(url, "http://%99[^/]"); /*Remove o http:// e salva o domínio do site*/
-	local_no_site = strtok(NULL, "[^\n]");		   /*Salva o recurso específico do domínio*/
+	local_no_site = strtok(NULL, "[^\n]"); /*Salva o recurso específico do domínio*/
 
 	host = gethostbyname(endereco_site);
 	server = preeche_dados_servidor(host);
@@ -82,15 +82,13 @@ int main(int argc, char const *argv[])
 
 int criar_socket()
 {
-	int socket_novo = socket(AF_INET, SOCK_STREAM, 0); /*Primeiro argumento especifica um domínio de comunicação,
-														selecionando a família de protocolos que será utilizada
-														para comunicação, AF_INET = Protocolo IPv4;
-														Segundo argumento define a forma como o socket vai se
-														comunicar, SOCK_STREAM = cliente e servidor ficam
-														trocando informações até a que a conexão seja encerrada;
-														Terceiro argumento define qual protocolo será usado
-														para comunicação, porém definido o primeiro e segundo
-														argumento, pode deixar o valor em 0*/
+	/*Primeiro argumento especifica um domínio de comunicação, selecionando a família
+de protocolos que será utilizada para comunicação, AF_INET = Protocolo IPv4;
+	Segundo argumento define a forma como o socket vai se comunicar,
+SOCK_STREAM = cliente e servidor ficam trocando informações até a que a conexão seja encerrada;
+	Terceiro argumento define qual protocolo será usado para comunicação,
+porém definido o primeiro e segundo argumento, pode deixar o valor em 0*/
+	int socket_novo = socket(AF_INET, SOCK_STREAM, 0);
 	if (socket_novo == -1){
 		printf("Não foi possível criar o socket\n");
 		exit(0);
@@ -113,10 +111,11 @@ char *gerar_requisicao_http(char *endereco_site, char *local_no_site)
 {
 	/*Montar a requisição HTTP*/
 	char *requisicao = (char *)malloc(100);
-	sprintf(requisicao, "GET /%s HTTP/1.1\r\nHost: %s\r\nConnection: close\r\n\r\n", local_no_site, endereco_site); /*	GET: obtem um recurso específico do servidor
-																														Host: especifica o nome de domínio do servidor, o destino da requisição
-																														Connection: controla a conexão entre o cliente e o servidor. O "close" significa
-																														que a conexão será encerrada depois de receber toda a resposta.*/
+	sprintf(requisicao, "GET /%s HTTP/1.1\r\nHost: %s\r\nConnection: close\r\n\r\n", local_no_site, endereco_site);
+	/*GET: obtem um recurso específico do servidor
+	Host: especifica o nome de domínio do servidor, o destino da requisição
+	Connection: controla a conexão entre o cliente e o servidor. O "close" significa que a conexão será encerrada
+depois de receber toda a resposta.*/
 	return requisicao;
 }
 
@@ -137,7 +136,7 @@ int verificar_header(char *resposta)
 {
 	char status_requisicao[MAX_BUFFER_SIZE];
 	strcpy(status_requisicao, resposta); /*Copio os primeiros conteúdos recuperados da página*/
-	strtok(status_requisicao, "\n");	 /*Salvo somente a primeira linha, referente ao status da requisição HTTP*/
+	strtok(status_requisicao, "\n"); /*Salvo somente a primeira linha, referente ao status da requisição HTTP*/
 	printf("Status da Requisição: %s\n", status_requisicao);
 	if (verificar_status(atoi(strtok(status_requisicao, "HTTP/1.1 ")))){ /*Verifica o número desse status*/
 		exit(0); /*Caso seja um erro, finaliza a execução do programa*/
