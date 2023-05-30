@@ -24,7 +24,7 @@ int main(int argc, char const *argv[])
 {
 	char url[100], resposta[MAX_BUFFER_SIZE];
 	char *endereco_site, *local_no_site, *requisicao;
-	int socket_desc = criar_socket(), verificou_header = 1;
+	int socket_desc = criar_socket(), verificou = 1;
 	struct hostent *host;
 	struct sockaddr_in server;
 	FILE *arquivo;
@@ -65,8 +65,8 @@ int main(int argc, char const *argv[])
 	/*Verifica se requisição foi aceita e salva página no arquivo*/
 	memset(resposta, '\0', sizeof(resposta));
 	while (recv(socket_desc, resposta, (sizeof(resposta) - 1), 0) > 0){
-		if (verificou_header){ /*Executado apenas no primeiro loop*/
-			verificou_header = verificar_header(resposta);
+		if (verificou){ /*Executado apenas no primeiro loop*/
+			verificou = verificar_header(resposta);
 			strcpy(resposta, remover_header(resposta));
 			arquivo = abre_arquivo();
 		}
@@ -150,7 +150,7 @@ char *remover_header(char *resposta){
 		content += 4; /*Deslocar em 4 bytes para o início do conteúdo*/
 	}
 	else{
-		content = resposta; /*Se o fim do cabeçalho não foi encontrado, escreva tudo*/
+		content = resposta; /*Se o fim do cabeçalho não foi encontrado, salva tudo*/
 	}
 	return content;
 }
