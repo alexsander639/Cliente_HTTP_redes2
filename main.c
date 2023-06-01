@@ -1,6 +1,6 @@
 /*	Redes II - Cliente HTTP
 	Aluno: Alex Sander S. Araujo Junior	RGA: 2019.0743.005-9
-	Aluno: Vinícius Silva de Paula		RGA:
+	Aluno: Vinícius Silva de Paula		RGA: 2017.0743.043-8
 */
 
 #include <stdio.h>
